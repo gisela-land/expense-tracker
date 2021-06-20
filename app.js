@@ -27,6 +27,7 @@ function compareCategory(records) {
         hasPulledCategory = true
         return records
       })
+      .catch((error) => console.log(error))
   } else {
     for (let i = 0; i < records.length; i++) {
       for (let j = 0; j < pulledCategory.length; j++) {
@@ -54,6 +55,8 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
+
 app.get('/', (req, res) => {
   let totalAmount = 0
   return Record.find()
@@ -62,12 +65,25 @@ app.get('/', (req, res) => {
       // console.log('records[0] = ', records[0])
       for (let i = 0; i < records.length; i++) {
         totalAmount += records[i].amount
+        records[i].date = records[i].date.toDateString()
       }
       return compareCategory(records)
     }).then((records) => {
       // console.log('*** records[0] = ', records[0])
       res.render('index', { records: records, totalAmount: totalAmount })
     })
+    .catch((error) => console.log(error))
+})
+
+app.get('/records/new', (req, res) => {
+  return res.render('new')
+})
+
+app.post('/records', (req, res) => {
+  // console.log('*** req.body = ', req.body)
+  return Record.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
 })
 
 app.listen(port, () => {
