@@ -44,37 +44,6 @@ function compareCategory(records) {
   }
 }
 
-function checkSelectedCategory(category) {
-  console.log('### hasPulledCategory = ', hasPulledCategory)
-  if (!hasPulledCategory) {
-    return Category.find()
-      .lean()
-      .then((categories) => {
-        pulledCategory = categories
-        hasPulledCategory = true
-      }).then(() => {
-        for (let i = 0; i < pulledCategory.length; i++) {
-          if (pulledCategory[i].name === category) {
-            pulledCategory[i].selected = true
-          } else {
-            pulledCategory[i].selected = false
-          }
-        }
-        return pulledCategory
-      })
-      .catch((error) => console.log(error))
-  } else {
-    for (let i = 0; i < pulledCategory.length; i++) {
-      if (pulledCategory[i].name === category) {
-        pulledCategory[i].selected = true
-      } else {
-        pulledCategory[i].selected = false
-      }
-    }
-    return pulledCategory
-  }
-}
-
 mongoose.connect('mongodb://localhost/Expense', { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection
@@ -139,6 +108,14 @@ app.put('/records/:id', (req, res) => {
       record.amount = req.body.amount
       return record.save()
     })
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
+})
+
+app.delete('/records/:id', (req, res) => {
+  const id = req.params.id
+  return Record.findById(id)
+    .then((record) => record.remove())
     .then(() => res.redirect('/'))
     .catch((error) => console.log(error))
 })
