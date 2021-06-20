@@ -4,7 +4,6 @@ const exphbs = require('express-handlebars')
 
 const Record = require('./models/record.js')
 const Category = require('./models/category.js')
-const category = require('./models/category.js')
 
 const app = express()
 const port = 3000
@@ -25,10 +24,15 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.get('/', (req, res) => {
+  let totalAmount = 0
   return Record.find()
     .lean()
     .then((records) => {
       // console.log('records[0] = ', records[0])
+      for (let i = 0; i < records.length; i++) {
+        totalAmount += records[i].amount
+      }
+
       return Category.find()
         .then((categories) => {
           for (let i = 0; i < records.length; i++) {
@@ -42,7 +46,7 @@ app.get('/', (req, res) => {
         })
     }).then((records) => {
       // console.log('*** records[0] = ', records[0])
-      res.render('index', { records: records })
+      res.render('index', { records: records, totalAmount: totalAmount })
     })
 })
 
