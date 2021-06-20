@@ -65,12 +65,12 @@ app.use(methodOverride('_method'))
 app.get('/', (req, res) => {
   let totalAmount = 0
   const filterBy = req.query.filterBy || ''
+  console.log('*** filterBy = ', filterBy)
 
   return Record.find({ category: { $regex: filterBy } })
     .lean()
     .sort({ date: 'desc' })
     .then((records) => {
-      // console.log('records[0] = ', records[0])
       for (let i = 0; i < records.length; i++) {
         totalAmount += records[i].amount
       }
@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/records/new', (req, res) => {
-  return res.render('new')
+  return res.render('new', { categories: pulledCategory })
 })
 
 app.post('/records', (req, res) => {

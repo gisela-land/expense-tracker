@@ -28,6 +28,9 @@
           <label for="category" class="col-sm-4 col-form-label" style="font-size: 20px;">類別*：</label>
           <div class="col-sm-8">
             <select class="form-control" id="category" name="category" required>
+              {{!-- {{#each categories}}
+              <option {{#if (eq filterBy this.name ) }} selected {{/if}}>{{this.name}}</option>
+              {{/each}} --}}
               <option {{#if (eq record.category '家居物業' ) }} selected {{/if}}>家居物業</option>
               <option {{#if (eq record.category '交通出行' ) }} selected {{/if}}>交通出行</option>
               <option {{#if (eq record.category '休閒娛樂' ) }} selected {{/if}}>休閒娛樂</option>

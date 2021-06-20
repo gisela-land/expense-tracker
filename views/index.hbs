@@ -6,6 +6,9 @@
         <div class="col mb-5" style="min-width: 300px;">
           <select class="form-control" id="filterBy" name="filterBy" onchange="action='';submit();">
             <option value="" {{#if (eq filterBy '' ) }} selected {{/if}}>-- 類別 --</option>
+            {{!-- {{#each categories}}
+            <option {{#if (eq filterBy this.name ) }} selected {{/if}}>{{this.name}}</option>
+            {{/each}} --}}
             <option {{#if (eq filterBy '家居物業' ) }} selected {{/if}}>家居物業</option>
             <option {{#if (eq filterBy '交通出行' ) }} selected {{/if}}>交通出行</option>
             <option {{#if (eq filterBy '休閒娛樂' ) }} selected {{/if}}>休閒娛樂</option>
