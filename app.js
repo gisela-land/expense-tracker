@@ -66,6 +66,7 @@ app.get('/', (req, res) => {
   let totalAmount = 0
   return Record.find()
     .lean()
+    .sort({ date: 'desc' })
     .then((records) => {
       // console.log('records[0] = ', records[0])
       for (let i = 0; i < records.length; i++) {
