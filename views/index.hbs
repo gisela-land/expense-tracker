@@ -1,1 +1,55 @@
-<h1>Welcome hbs!</h1>
+<div class="container mt-5">
+  <!-- Tool bar -->
+  <!--
+  <div class="col-md-10 col-12 mx-auto">
+    <div class="row">
+      <form action="/filter">
+        <div class="dropdown">
+          <select id="filterBy" name="filterBy" class="form-control" data-role="select-dropdown" title="test" onchange="action='';submit();" style="display: inline;">
+            <option value="none">--</option>
+            <option value="name" selected>名稱</option>
+            <option value="category">類別</option>
+            <option value="rating">評分</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+  -->
+
+  <!-- Item -->
+  <div class="col-md-10 col-12 mx-auto">
+    <ul class="list-group">
+      {{#each records}}
+      <li class="list-group-item">
+        <div class="row align-items-center">
+          <div class="col-2 mr-auto justify-content-center" style="height: 40px;">
+            <div class="row justify-content-center align-items-center">
+              <h1>{{{ this.category }}}</h1>
+            </div>
+          </div>
+          <div class="col-4 mr-auto mt-2 align-items-center">
+            <h4 style="height: 20px;">{{ this.name }}</h4>
+            <h6 style="height: 20px;">{{ this.date }}</h6>
+          </div>
+          <div class="col-2 mr-auto" style="height: 40px;">
+            <div class="row justify-content-end align-items-center">
+              <h4>
+                {{ this.amount }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-4" style="height: 40px;">
+            <div class="row justify-content-end">
+              <a class="btn btn-success mr-2" href="./records/{{ this._id }}/edit">修改</a>
+              <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+                <button class="btn btn-danger mr-2" type="submit">刪除</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
