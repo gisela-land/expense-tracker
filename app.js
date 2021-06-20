@@ -7,6 +7,37 @@ const Category = require('./models/category.js')
 
 const app = express()
 const port = 3000
+let hasPulledCategory = false
+let pulledCategory = []
+
+function compareCategory(records) {
+  // console.log('@@@ hasPulledCategory = ', hasPulledCategory)
+  if (!hasPulledCategory) {
+    return Category.find()
+      .then((categories) => {
+        pulledCategory = categories
+        // console.log('*** pulledCategory = ', pulledCategory)
+        for (let i = 0; i < records.length; i++) {
+          for (let j = 0; j < categories.length; j++) {
+            if (records[i].category === categories[j].name) {
+              records[i].category = categories[j].icon
+            }
+          }
+        }
+        hasPulledCategory = true
+        return records
+      })
+  } else {
+    for (let i = 0; i < records.length; i++) {
+      for (let j = 0; j < pulledCategory.length; j++) {
+        if (records[i].category === pulledCategory[j].name) {
+          records[i].category = pulledCategory[j].icon
+        }
+      }
+    }
+    return records
+  }
+}
 
 mongoose.connect('mongodb://localhost/Expense', { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -32,18 +63,7 @@ app.get('/', (req, res) => {
       for (let i = 0; i < records.length; i++) {
         totalAmount += records[i].amount
       }
-
-      return Category.find()
-        .then((categories) => {
-          for (let i = 0; i < records.length; i++) {
-            for (let j = 0; j < categories.length; j++) {
-              if (records[i].category === categories[j].name) {
-                records[i].category = categories[j].icon
-              }
-            }
-          }
-          return records
-        })
+      return compareCategory(records)
     }).then((records) => {
       // console.log('*** records[0] = ', records[0])
       res.render('index', { records: records, totalAmount: totalAmount })
