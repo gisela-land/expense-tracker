@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const db = require('../../config/mongoose.js')
 const Category = require('../category.js')
 
 const cateArray = [
@@ -9,16 +9,7 @@ const cateArray = [
   { name: '其他', icon: '<i class="fas fa-pen" style="color: lightskyblue;"></i>' },
 ]
 
-mongoose.connect('mongodb://localhost/Expense', { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-
 db.once('open', () => {
-  console.log('mongodb connected.')
   Category.create(
     cateArray
   ).then(() => {

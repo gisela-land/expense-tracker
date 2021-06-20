@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const db = require('../../config/mongoose.js')
 const Record = require('../record.js')
 
 const recArray = [
@@ -9,16 +9,7 @@ const recArray = [
   { name: '租金', category: '家居物業', date: '2019-04-01', amount: 25000 },
 ]
 
-mongoose.connect('mongodb://localhost/Expense', { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-
 db.once('open', () => {
-  console.log('mongodb connected.')
   Record.create(
     recArray
   ).then(() => {
