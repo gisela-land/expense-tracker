@@ -1,21 +1,21 @@
 <div class="container mt-5">
   <!-- Tool bar -->
-  <!--
   <div class="col-md-10 col-12 mx-auto">
-    <div class="row">
-      <form action="/filter">
-        <div class="dropdown">
-          <select id="filterBy" name="filterBy" class="form-control" data-role="select-dropdown" title="test" onchange="action='';submit();" style="display: inline;">
-            <option value="none">--</option>
-            <option value="name" selected>名稱</option>
-            <option value="category">類別</option>
-            <option value="rating">評分</option>
+    <div class="row justify-content-center">
+      <form action="/" method="GET">
+        <div class="col mb-5" style="min-width: 300px;">
+          <select class="form-control" id="filterBy" name="filterBy" onchange="action='';submit();">
+            <option value="" {{#if (eq filterBy '' ) }} selected {{/if}}>-- 類別 --</option>
+            <option {{#if (eq filterBy '家居物業' ) }} selected {{/if}}>家居物業</option>
+            <option {{#if (eq filterBy '交通出行' ) }} selected {{/if}}>交通出行</option>
+            <option {{#if (eq filterBy '休閒娛樂' ) }} selected {{/if}}>休閒娛樂</option>
+            <option {{#if (eq filterBy '餐飲食品' ) }} selected {{/if}}>餐飲食品</option>
+            <option {{#if (eq filterBy '其他' ) }} selected {{/if}}>其他</option>
           </select>
         </div>
       </form>
     </div>
   </div>
-  -->
 
   <!-- Total Amount -->
   <div class="col-md-10 col-12 mx-auto">

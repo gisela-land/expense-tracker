@@ -64,7 +64,9 @@ app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
   let totalAmount = 0
-  return Record.find()
+  const filterBy = req.query.filterBy || ''
+
+  return Record.find({ category: { $regex: filterBy } })
     .lean()
     .sort({ date: 'desc' })
     .then((records) => {
@@ -74,8 +76,7 @@ app.get('/', (req, res) => {
       }
       return compareCategory(records)
     }).then((records) => {
-      // console.log('*** records[0] = ', records[0])
-      res.render('index', { records: records, totalAmount: totalAmount })
+      return res.render('index', { records: records, totalAmount: totalAmount, filterBy: filterBy })
     })
     .catch((error) => console.log(error))
 })
