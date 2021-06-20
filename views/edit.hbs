@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-6 mx-auto">
+      <form action="/records/{{ record._id }}?_method=PUT" method="POST">
+        <div class="mb-3 row">
+          <div class="col-4">
+            <h6>*必填欄位</h6>
+          </div>
+          <div class="col-8" style="text-align: center;">
+            <h4>請修改你的支出</h4>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-4 col-form-label" style="font-size: 20px;">名稱*：</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" style="font-size: 20px;" id="name" name="name" required
+              value="{{ record.name }}">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="date" class="col-sm-4 col-form-label" style="font-size: 20px;">日期*：</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control" style="font-size: 20px;" id="date" name="date" required
+              value="{{ record.date }}">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="category" class="col-sm-4 col-form-label" style="font-size: 20px;">類別*：</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="category" name="category" required>
+              <option {{#if (eq record.category '家居物業' ) }} selected {{/if}}>家居物業</option>
+              <option {{#if (eq record.category '交通出行' ) }} selected {{/if}}>交通出行</option>
+              <option {{#if (eq record.category '休閒娛樂' ) }} selected {{/if}}>休閒娛樂</option>
+              <option {{#if (eq record.category '餐飲食品' ) }} selected {{/if}}>餐飲食品</option>
+              <option {{#if (eq record.category '其他' ) }} selected {{/if}}>其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="amount" class="col-sm-4 col-form-label" style="font-size: 20px;">金額*：</label>
+          <div class="col-sm-8">
+            <input type="number" class="form-control" style="font-size: 20px;" id="amount" name="amount" min="0"
+              required value="{{ record.amount }}">
+          </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="submit" class="btn btn-success">送出修改</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
